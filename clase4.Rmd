@@ -1,0 +1,65 @@
+---
+title: "Primera visita al lab"
+author: "Document Author"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: tactile
+    highlight: github
+---
+
+## Introducción a R y a RStudio
+
+Hemos asumido algunas cosas respecto de lo que ya sabes con el fin de poder sacar mayor provecho de este libro. Tienes que tener una literacidad numérica general, y sería útil que tuvieses algo de experiencia programando. Si nunca has programado antes y puedes leer en inglés, Hands on Programming with R escrito por Garrett podría ser un buen acompañamiento para este libro.
+
+Hay cinco cosas que necesitas para poder ejecutar el código en este libro: R, RStudio, una colección de paquetes llamada tidyverse, el paquete datos (que incluye los datos en español se se utilizan en los ejemplos y ejercicios) y una serie de otros paquetes. Los paquetes son la unidad fundamental de código reproducible de R. Incluyen funciones reutilizables, la documentación que describe cómo usarlas y datos de muestra.
+
+### R
+
+- Descargar R, desde el sito CRAN
+- 
+
+Una nueva versión importante de R sale una vez al año, y hay entre 2 y 3 ediciones menores en ese período. Es una buena idea actualizarlo regularmente. El proceso puede ser un poco engorroso, especialmente en el caso de las versiones mayores, que requieren que reinstales todos los paquetes que ya tienes. Sin embargo, no hacerlo puede ser peor. Para este libro, asegúrate de tener al menos la versión 3.5.
+
+### RStudio
+RStudio es un ambiente de desarrollo integrado (o IDE, por su sigla en inglés: Integrated Development Environment) para programar en R. Puedes descargarlo e instalarlo desde http://www.rstudio.com/download. RStudio se actualiza un par de veces al año. Cuando haya una nueva versión disponible, el mismo programa te lo hará saber. Es una buena idea mantenerlo actualizado para que puedas aprovechar las mejores y más recientes características. Para este libro, asegúrate de tener al menos la versión 1.0.0.
+
+Cuando abras RStudio, verás en la interfaz dos regiones clave:
+
+Por ahora, todo lo que tienes que saber es que el código de R se escribe en la Consola y que hay que presionar Enter para ejecutarlo. ¡Aprenderás más a medida que avancemos!
+
+### El Tidyverse
+Es necesario que instales también algunos paquetes de R. Un paquete es una colección de funciones, datos y documentación que permite extender las capacidades de R base. Los paquetes son clave para usar R de manera exitosa. La mayoría de los paquetes que aprenderás a usar en este libro son parte del llamado “Tidyverse”. Los paquetes del Tidyverse comparten una filosofía acerca de los datos y la programación en R, y están diseñados para trabajar juntos con naturalidad. Su nombre viene de la palabra en inglés “tidy”, que quiere decir “ordenado”.
+
+Puedes instalar el tidyverse completo con una sola línea de código:
+
+install.packages("tidyverse")
+Escribe en tu computadora esa línea de código en la consola y luego presiona Enter para ejecutarla. R descargará los paquetes de CRAN y los instalará en tu computadora. Si tienes problmas durante la instalación, asegúrate que tienes conexión a Internet y que https://cloud.r-project.org/ no está bloqueado por tu firewall o proxy.
+
+No podrás usar las funciones, objetos y archivos de ayuda de un paquete hasta que lo hayas cargado con library(). Una vez que has instalado un paquete, puedes cargarlo con la función library():
+
+library(tidyverse)
+
+Este mensaje te indica que el tidyverse está cargando los paquetes ggplot2, tibble, tidyr, readr, purrr y dplyr. Estos son considerados el corazón del Tidyverse porque los usarás prácticamente en cualquier análisis.
+
+Los paquetes del Tidyverse cambian con bastante frecuencia. Puedes ver si existen actualizaciones disponibles y opcionalmente instalarlas ejecutando tidyverse_update().
+
+### El paquete datos
+
+Con el fin de que este libro sea más accesible para el público hispanoparlante, además de la traducción del texto se han traducidos los datos que se utilizan en los ejemplos y ejercicios.
+
+En estos momentos, el paquete datos se encuentra disponible en Github y puedes instalarlo ejecutando el siguiente código:
+
+#install.packages("remotes")
+
+remotes::install_github("cienciadedatos/datos")
+#> Skipping install of 'datos' from a github remote, the SHA1 (0e2b4c4b) has not changed since last install.
+#>   Use `force = TRUE` to force installation
+Si no tienes instalado el paquete remotes, elimina el # en la primera línea del código para que se ejecute su instalación.
+
+### Otros paquetes
+Existen muchas otros paquetes excelentes que no son parte del tidyverse porque resuelven problemas de otros ámbitos, o porque los principios en los que se basa su diseño son distintos. Esto no los hace mejores o peores, solo diferentes. En otras palabras, el complemento del tidyverse no es el messyverse (del inglés messy, desordenado), sino muchos otros universos de paquetes interrelacionados. A medida que te enfrentes a más proyectos de ciencia de datos con R, aprenderás sobre nuevos paquetes y nuevas formas de pensar los datos.
+
+Existen otros tres paquetes que debes instalar, además del tidyverse y datos. Si bien no los utilizarás directamente, es necesario que estén instalados para que el paquete datos pueda traducir al español los datasets que estos contienen.
+
+install.packages(c("nycflights13", "gapminder", "Lahman"))
