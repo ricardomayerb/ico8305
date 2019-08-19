@@ -112,7 +112,7 @@ p
 ## Datos cuantitativos
 
 ```{r pesos}
-wdata = data.frame(
+wdata <- data.frame(
         sex = factor(rep(c("F", "M"), each=200)),
         weight = c(rnorm(200, 55), rnorm(200, 58))
         )
@@ -131,17 +131,9 @@ a + geom_histogram(bins = 30, color = "black", fill = "gray") +
   geom_vline(aes(xintercept = mean(weight)), 
              linetype = "dashed", size = 0.6)
 
-# Change line color by sex
-a + geom_histogram(aes(color = sex), fill = "white", 
-                   position = "identity") 
-
-a + geom_histogram(aes(color = sex, fill = sex),
-                         alpha + geom_histogram(aes(color = sex, fill = sex),
-                         alpha = 0.4, position = "identity") +
-a = 0.4, position = "identity") +
-a + geom_histogram(aes(color = sex, fill = sex),
-                         alpha = 0.4, position = "identity") +
-
+a + geom_histogram(aes(fill = sex), 
+                   position = "identity",
+                   alpha = 0.4)
 
 # change fill and outline color manually 
 a + geom_histogram(aes(color = sex, fill = sex),
