@@ -6,10 +6,23 @@ book <- "./Anderson_Sweeney.pdf"
 area1 <- locate_areas(book, pages = 148)
 area1
 
-tabla_3_10_listdf <- extract_tables(file = book, pages = 148, area = area1,
+# top      left    bottom     right 
+# 83.16532 151.68448 339.31452 605.76714 
+
+area1_alt <- list(c(85, 150, 320, 600))
+area1_alt
+
+tabla_3_10_listdf <- extract_tables(file = book, pages = 148,
+                                    area = area1,
                                     output = "data.frame")
+
+tabla_3_10_listdf_alt <- extract_tables(file = book, pages = 148,
+                                    area = area1_alt,
+                                    output = "data.frame")
+
+
 tabla_3_10_df <- tabla_3_10_listdf[[1]]
-tabla_3_10_df <- tabla_3_10_df[-1,]
+tabla_3_10_df <- tabla_3_10_df[-1, ]
 colnames(tabla_3_10_df) <- c("notebook", "puntos_func", "puntos_gral")
 tabla_3_10_df
 
