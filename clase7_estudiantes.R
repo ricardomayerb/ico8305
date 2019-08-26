@@ -1,0 +1,10 @@
+library(tidyverse)
+
+xn <- rnorm(100, mean = 0, sd = 1)
+xp <- rpois(100, lambda = 1.5)
+xln <- rlnorm(100, mean = 0, sd = 1.1)
+cv <- sd(xln)/mean(xln)
+median(xln)
+mean(xln)
+min(xln)
+max(xln)
