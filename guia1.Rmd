@@ -1,0 +1,380 @@
+---
+title: "Guia 1: vectores, funciones y data frames"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<!-- ```{r loading, message=FALSE} -->
+<!-- library(tidyverse) -->
+<!-- library(readxl) -->
+<!-- library(datos) -->
+<!-- ``` -->
+
+## Aprendiendo R por su cuenta, primera parte.
+
+
+### *Usted está aquí*
+Esta es una lista de supermercado de cosas que vas a ir aprendiendo y que le servirá para ver donde está.  Están aproximadamente en orden. Como ya ha asistido a varias sesiones de laboratorio computacional, doy por hecho que  está OK al menos hasta el item 7. Del 8 al 11 o bien lo sabe o le va a parecer conocido cuando lo vuelva a ver. Asumiré que no sabe nada desde el 11 hacia adelante.  Al llegar al final de la lista tendrá todas las habilidades básicas para escribir sus propios programas y seguir los ejemplos, tutoriales y explicaciones  encontrará en internet.
+
+1. Sabes que es R y RStudio?
+
+2. Puedes comenzar una sesión en RStudio?
+
+3. Sabes qué es un script de R?
+
+4. Si tienes un script en tus achivos, lo puedes abrir?
+
+5. Si tienes un script abierto en RStudio, puedes ejecutarlo? (línea por línea o todo a la vez)
+
+6. Puedes crear un nuevo script en RStudio?
+
+7. Sabes cómo asignarle un valor a un objeto? (e.g.  "a <- 3+7")
+
+8. Sabes como crear un vector?
+
+9. Sabes como usar `plot` e `hist` para crear diagramas de dispersión e histogramas básicos?
+
+10. Sabes lo que son las funciones en R y cómo se usan? (por ejemplo, la función `mean`)
+
+11. Sabes como instalar y cargar un paquete de R?
+
+12. Sabes como crear un data.frame y un tibble?
+
+13. Sabes como crear una lista?
+
+14. Sabes como seleccionar partes de un vector? de un data.frame? de una lista?
+
+15. Sabes como manipular un data.frame o un tibble?
+
+16. Puedes crear un diagrama de dispersión, un diagrama de caja usando ggplot2?
+
+17. Sabes cómo importar una hoja de Excel en R?
+
+18. Has escrito un `for` loop?
+
+19. Has escrito una función?
+
+
+
+
+## Vectores y primeras funciones
+
+### Vectores
+
+Uno de los objetos más usados y más sencillos es el vector. Puede ser creado en forma manual (usando la función `c`, *combinar*) o como el resultado final que nos devuelve alguna otra función de `R` (como `rnorm`):
+
+```{r vectores}
+# crear manualmente un vector de números y asignar el vector a un objeto que llamaremos x
+x <- c(2, 65, 8, 33)
+
+# crear manualmente un vector de strings (texto) y asignar el vector a un objeto que llamaremos y
+y <- c("mejor curso", "o mejor curso")
+
+# crear manualmente un vector lógico  asignar el vector a un objeto que llamaremos z
+z <- c(TRUE, FALSE, TRUE)
+
+# para imprimir los valores en la consola debemos escribir el nombre del objeto y ejecutar o bien 
+# usar la función print
+
+x
+y
+print(z)
+```
+
+### Primeras funciones
+Ya hemos usado dos funciones en el ejemplo anterior: `c` y `print`. Lo primero que debemos notar es que siempre que se usan debe agregarse un paréntesis después del nombre de la función: `c()` y `print()`. Lo segundo es que dentro del paréntsis van objectos que dentro de la función reciben el nombre de argumentos. Algunos argumentos tienen un valor por defecto, que es usado por la función y otros que, al no tener asignado un valor por defecto, deben pedirle al usuario que especifique un valor al momento de usar la función. 
+
+Que son los argumentos y aquellos que tienen valor por defecto quedan más claro si estudiamos la función `mean`:
+
+```{r mean1}
+# un vector igual a x, pero agregando un missing value al final 
+# missing values en R se representan con NA e indican que no existe 
+# un valor para ese elemento
+
+xna <- c(2, 65, 8, 33, NA)
+
+# usemos la función mean
+mean(x = xna)
+
+# oops, que pasó? usemos la función otra vez
+# pero especificando el valor de otro de sus argumentos
+mean(x = xna, na.rm = TRUE)
+
+# ahora si calculó el promedio, excluyendo el valor NA
+```
+
+Por qué cambió el resultado al incluir explicitamente `na.rm = TRUE` dentro de la función? La explicación la encontramos al ver la página de ayuda de `mean`, que contiene, entre otras cosas, las siguientes explicaciones:
+
+- *Default S3 method: mean(x, trim = 0, na.rm = FALSE, ...)*. Qué aprendemos? Que la función mean tiene tres argumentos, `x`, `trim` y `na.rm`, y que dos de ellos tiene valores por defecto de modo que, si estamos conformes, podemos ahorrarnos trabajo y no especificarlos al usar la función. Esta es la razón de por qué es imprescindible que *nosotros* le asignemos un valor a `x`.  El argumento `trim` tiene asignado el valor 0 y es lo que va a usar a menos que especifiquemos otro valor. Finalmente, vemos **que el argumento `na.rm` tiene asignado por defecto el valor `FALSE`** y es el que va a usar a menos que especifiquemos otro valor, tal como lo hicimos  la segunda vez que intentamos calcular el promedio: `mean(x = xna, na.rm = TRUE)`.
+
+- *x: An R object. Currently there are methods for numeric/logical vectors and date, date-time and time interval objects. Complex vectors are allowed for trim = 0, only.*. Nos dice que x debe ser un objeto válido en R y que actualmente la función acepta vectores lógicos, vectores numéricos y vectores de fechas.
+
+- *na.rm: a logical value indicating whether NA values should be stripped before the computation proceeds.*. OK, este es el argumento que nos importa! Dice que debe ser igual a un valor lógico (es decir TRUE o FALSE) indicando si debe remover los `NA` antes de calcular el promedio. Y como el valor por defecto que tiene ese argumento es FALSE, así es que **no** removerá ningún NA a menos que explicitamente escribamos `rm.na = TRUE` al usar la función. 
+
+
+En `R` y en muchos lenguajes de programación la suma de un número con un `NA` es igual a `NA`, la división de un número por un `NA` es igual a `NA` ... en general todas las operaciones ariméticas que involucran al menos un `NA` resultan en `NA`.   
+
+Un último punto sobre argumentos: en la definición de la función los argumentos tienen un orden (x primero, trim segundo, etc.). Podemos obviar los nombres de los argumentos y simplemente escribir su valor, por ejemplo `mean(xna, 0, FALSE)` y R va a descansar en la posición de cada uno para saber a qué argumento se refiere, es decir asume que el primer valor es el de x, el segundo es el de trim, etc. La ventaja de usar los nombres es hacer más explícito al lector nuestras opciones y, adicionalmente aquellos argumentos en que usemos los nombres pueden aparecer en cualquier orden.
+
+El tema de las funciones y los argumentos puede ser un poco pesado de digerir, por lo que aquí agregaremos unas líneas de código a modo de ilustración:
+
+```{r resumenargumentos}
+
+# recordemos nuestro objecto "xna":
+xna
+
+# Hacer esto:
+mean(x = xna)
+
+# ... es equivalente a usar los valores por defecto:
+mean(x = xna, trim = 0, na.rm = FALSE)
+
+# Esto cambia el valor de na.rm pero mantiene el de trim
+mean(x = xna, na.rm = TRUE)
+
+# Esto cambia el valor de trim pero mantiene el de na.rm
+mean(x = xna, trim =0.2)
+
+# Hacer esto:
+mean(x = xna, trim = 0.2, na.rm = TRUE)
+
+# .. es equivalente a 
+mean(xna, 0.2, TRUE) # (porque se guía por la posición de los arg)
+
+# Sin embargo lo siguiente es inválido:
+# mean(xna, TRUE, 0.2) # (porque le asigna TRUE a trim y 0.2 a na.rm)
+
+# Pero usar los nombres nos  permite cambiar el orden:
+mean(x = xna, na.rm = TRUE, trim = 0.2)
+
+# Posición y nombre se pueden usar en la misma llamada a mean:
+# x lo entiende por posición y los otros dos por nombre
+mean(xna, na.rm = TRUE, trim = 0.2)
+
+# esa última formulación es muy común porque el primer argumente suele
+# ser el más usado y el que todo el mundo tiene claro cuál es.
+
+```
+
+#### Ejercicio
+
+ + Para testear si entendió, **lea el help de la función `rnorm`** (por ejemplo, escribiendo `?rnorm` en la consola), identifique cuántos argumentos tiene, cuáles argumentos tienen valores por defecto y cuales son estos valores por defecto.
+
+#### Recursos relacionados
+A esta altura, pueden consultar las siguientes secciones de libros o tutoriales que están en línea para repasar y complementar lo aprendido hasta aquí:
+
+- http://stat545.com/block002_hello-r-workspace-wd-project.html
+- https://es.r4ds.hadley.nz/flujo-de-trabajo-conocimientos-basicos.html
+- https://www.dummies.com/programming/r/how-to-use-a-function-in-r/
+- https://rafalab.github.io/dsbook/r-basics.html#the-very-basics y puntualmente https://rafalab.github.io/dsbook/r-basics.html#functions
+- Aquí hay un video un poco antiguo, pero si ven el canal de youtube van a encontrar muchos videos muy útiles y, lo mejor de todo, duran dos minutos o menos! https://www.youtube.com/watch?v=wiXmMdcgs-o&list=PLcgz5kNZFCkzSyBG3H-rUaPHoBXgijHfC&index=11&t=0s
+
+ 
+### Otras funciones comunes en estadística
+
+A modo de práctica, le invitamos a probar estas otras funciones muy comunes en estadística, que incluyen gráficos, estadísticas descriptiva y generación de numeros aleatorios. Pruebe usted también otros valores para los argumentos para explorar su comportamiento.
+
+Comencemos generando números aleatorios desde una distribución normal y desde una distribución chi-cuadrado
+
+```{r}
+# chi-squared
+rchisq(n = 6, df = 4)
+rchisq(n = 10, df = 4)
+a <- rchisq(n = 1000, df = 4)
+
+
+# normal
+rnorm(n = 6)
+rnorm(n = 10)
+rnorm(n = 10, mean = 2)
+b <- rnorm(1000, mean = 2)
+
+# histograms
+hist(a, breaks = 40)
+hist(b)
+
+# desviación estandard
+sd(a)
+
+# quantiles de los datos, ignorando la distribución
+quantile(a)
+quantile(a, 0.3)
+quantile(a, c(0.3, 0.6))
+
+# quantiles de la distribución, teóricos 
+qchisq(df = 4, p = c(0.3, 0.6))
+
+# boxplot
+boxplot(a)
+
+# similar al box plot, pero como texto
+summary(a)
+
+```
+
+### Practique usando funciones
+
+#### Ejercicio
+ + Prueba las siguientes funciones: consulta su página de ayuda, mira los ejemplos en la página de ayuda, pruébalos en la consola, prueba distintos valores en algunos argumentos y vea que sucede
+
+    - `rbinom`
+    - `qbinom`
+    - `pnorm`
+    - `qexp`
+    - `head`
+    - `tail`
+    
+ + Use la función `rbinom` para generar una muestra de 22 números aleatorios desde una distribución binomial con parámetros `size = 5` y `prob = 0.6`.
+ 
+ + Use la función `pnorm` para obtener el valor de $y$ tal que $Prob(x \leq y) = 0.92$, donde $x$ proviene de una distribución normal con media igual a 0 y varianza igual a 1. ¿Es necesario cambiar alguno de los valores por defecto que usa la función `pnorm`? 
+
+#### Recursos para explorar:
+
++ https://github.com/rstudio/cheatsheets/raw/master/translations/spanish/estadistica-descriptiva-con-R.pdf
+
+## Paquetes
+
+Un paquete (*package*) en `R` es un archivo que contiene nuevas funciones. Cuando $R$ se instala por primera vez, se instalan algunos paquetes, como los paquetes `base`, `utils` y `stats` que contienen las funciones más elementales de `R`. No sólo vienen instalados cuando se instala `R`, si no que que cuando se abre un sesión (por ejemplo en RStudio) Ud. automáticamente tiene acceso a dichas funciones: por ejemplo podemos usar las funciones `c` y `mean` del paquete `base`, así como la función `pnorm` del paquete `stats`.  
+
+A menudo, sin embargo, queremos usar funciones que se encuentran en otros paquetes. Por ejemplo, si queremos estimar la probabilidad acumulada en una *Normal Estándar Truncada* por la derecha en el valor 1 (es decir, una distribución normal estándar a la que se amputó la sección a la derecha del número 1), o generar números aleatorios prevenientes de dicha distribución, nada en los paquetes `base` o `stats` nos sirve. Una breve búsqueda en internet nos revela que existe un paquete de `R` llamado `extraDistr` que contiene funciones apropiadas para estos fines, en concreto las funciones `ptnorm` y `rtnorm`.
+
+Una consulta al panel *Packages* en RStudio nos revela que no tenemos dicho paquete en nuestro computador: deberemos instalarlo. La funciónque instala paquete se llama `install.packages` y fácilmente utilizable vía el panel *Packages* en RStudio, basta con hacer click en `Install` y seguir las instrucciones  (básicamente escribir el nombre del paquete que deseamos instalar). En la consola se va a ejecutar el comando install.packages("extraDistr") y apareceran algunos mensajes relativos al proceso de instalar
+
+OK, ahora usemos las funciones que queríamos, por ejemplo `ptnorm`:
+
+```{r extradistrfail, error=TRUE}
+ptnorm(0.50, b = 1)
+```
+
+¿No la encuentra? ¿Pero cómo? Si acabamos de instalar el paquete `extraDistr`!! ... Bueno porque una cosa es instalar un paquete y otra es cargarlo. Vea lo que ocurre si usamos la función `library` antes de usar `ptnorm`:
+
+```{r extradistr}
+library(extraDistr)
+ptnorm(0.50, b = 1)
+```
+
+Ahora sí! Lo que ocurre es que `library(extraDistr)` trae a la sesión de `R` en curso todos los nombres de las fuciones contenidas en ese paquete. Una vez que `library(extraDistr)` se ha ejecutado, podemos usar hasta el final de la sesión todas las funciones que ahí existen. Cuando reiniciamos `R` debemos ejecutar `library(extraDistr)` otra vez para poder usar las funciones.  Los paquetes `base` y `stats` no son distintos, lo que ocurre es que los comandos `library(base)` y `library(stats)` son ejecutados tras bambalinas cada vez que se inicia un sesión de `R`, sin que usted se entere.
+
+Se recomienda poner en las primeras líneas de su script todos los comandos del tipo `library(xyz)` que se requieran para correr el script completo, de este modo cualquier usuario sabe de antemano si debe instalar algún paquete que le falte.
+
+#### Ejercicio
+
++ Instale el paquete `tibble`
++ Instale el paquete `readxl`
++ Instale el paquete `datos`
+
+
+## Data frames y tibbles
+### Data frames
+El tipo de objeto más usado para representar un conjunto de datos es un data frame. Aquí hay un ejemplo:
+
+```{r showdataframe}
+print(mtcars)
+
+class(mtcars)
+```
+
+Lo que vemos son las seis primeras filas del data frame, que contiene once columnas, que representan once variables. Además vemos que las filas tiene nombres, en este caso el modelo de automóvil. Una pregunta válida es si no será mejor tener los modelos de autos como una variable igual a las otras once. 
+
+Por ahora nos preocuparemos de dos formas de crear data frames: a mano y como resultado de importar un hoja de excel
+
+```{r importardafaframe}
+# la funcion read.csv2 retorna un data frame 
+notas_curso_df <- read.csv2("notas_curso.csv")
+
+notas_curso_df
+class(notas_curso_df)
+
+# también se podría haber creado manualmente
+# una COLUMNA a la vez
+notas_curso_df_manual <- data.frame(
+  nombre = c("pedro", "juan", "diego", "frida", "simone", "judith"),
+  solemne = c(3.5, 4, 5, 6, 5.5, 7),
+  controles = c(5, 3, 6, 6.5, 7, 6),
+  examen = c(3, 4, 4.8, 5.5, 6, 6),
+  final = c(3.8, 3.7, 5.2, 6, 6.2, 6.3))
+
+```
+
+Es perfectamente posible crear previamente el contenido de alguna columna como un vector y luego simplemente escribir el nombre de la columna, el signo igual, y nuestro vector.
+
+
+
+### Tibbles
+
+Tibbles son tipo especial data frame, creadas en el contexto de los paquetes que forman el tidyverse. Las formas de manipularlos son generalmente las mismas. En una primera etapa la principal diferencia que van a encontrar es que la forma en que aparecen en la consola es distinta: las data frames tratan de mostrar todas las filas y columnas en la consola mientras que las tibble muestran solo las primeras filas y la cantidad de columnas que caben en el ancho de la consola. Adicionalmente entrega información sobre el número de filas y columnas y sobre el tipo (clase) de datos en cada columna (p.e. `dbl` para clase double, `chr` para datos clase character, etc.)
+
+Veamos a modo de ejemplo una tibble de nombre diamantes:
+
+```{r diamantestbl}
+library(datos) # instaló el package "datos", cierto? 
+diamantes
+
+class(diamantes)
+
+```
+
+En la última linea podemos ver que pertenecen a la clase de los data frames, pero son un tipo especial llamado tbl_df.
+
+
+La forma en que se crean son muy similares a los data frames. En particular algunas funciones retornan los resutados en forma de tibble o pueden ser creadas directamente por el usuario. Tal como en el caso anterior, veamos una función que importa datos y retorna un tibble y una manera manual de crear el mismo objeto:
+ 
+
+```{r importtibble}
+# read_excel, como en general las funciones del tidyverse
+# retorna un tibble en vez de un data frame
+library(readxl) # instaló el package "readxl", cierto?
+notas_curso_tbl <- read_excel("notas_curso.xlsx")
+
+# la creacion manual es muy similar a un data frame   
+
+library(tibble) # instalarlo era parte de un ejercicio más arriba
+notas_curso_tbl_manual <- tibble(
+  nombre = c("pedro", "juan", "diego", "frida", "simone", "judith"),
+  solemne = c(3.5, 4, 5, 6, 5.5, 7),
+  controles = c(5, 3, 6, 6.5, 7, 6),
+  examen = c(3, 4, 4.8, 5.5, 6, 6),
+  final = c(3.8, 3.7, 5.2, 6, 6.2, 6.3))
+
+```
+
+
+#### Recursos relacionados a tibbles y data frames
+
++ https://rafalab.github.io/dsbook/r-basics.html#data-frames
++ https://es.r4ds.hadley.nz/tibbles.html
++ https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html
++ https://rafalab.github.io/dsbook/tidyverse.html#tibbles
++ https://github.com/rstudio/cheatsheets/raw/master/translations/spanish/data-wrangling-cheatsheet_Spanish.pdf
++ https://github.com/rstudio/cheatsheets/raw/master/translations/spanish/data-transformation_Spanish.pdf
+
+
+### Ejercicios
+
+En el siguiente ejercicio van a crear unos vectores y luego usaran esos vectores como columnas para crear un data frame
+
++ Cree un data frame con dos columnas: *valor_x* y *valor_y*. En la primera columna debe usar el vector *mis_x* y en la segunda, *mis_y*. Guarde el data frame en un objeto de nombre `df_xy`
+
+```{r creardara}
+# primero creamos dos vectores de numeros
+mis_x <- seq(1, 20)
+mis_y <- 3 + 0.5*mis_x + rnorm(20)
+
+# breve vistazo
+print(mis_x)
+print(mis_y)
+ 
+# Con esos vectores, cree el data frame pedido.
+
+# considere lo siguiente como ejemplo:
+
+# df_xy <- data.frame(valor_x = un vector, valor_y = el otro vector)
+
+# ahora usted:
+
+```
+
