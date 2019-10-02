@@ -90,20 +90,66 @@ notas_exazul <- notas %>% filter(examen >= 4)
 notas_exazul
 
 # No era necesario asignar el resultado a un objeto, pero hace 
-# más corto el proximo
+# más corto el próximo código
 
 # 7) Compute la proporcion de gente que obtuvo un azul en el examen
 # Sol:
-# Opcion 1
+# Opcion 1, usando la nueva tibble
 nrow(notas_exazul)/nrow(notas)
 
-# Opcion 2
+# Opcion 2.a usando el vector de notas examen y la suma de TRUE y FALSE 
+sum(notas$examen >= 4)/length(notas$examen)
+
+
+# Opcion 2.b indexando el vector de notas
 length(notas$examen[notas$examen >= 4])/length(notas$examen)
 
+# Opción 3 usando la tibble original
+notas %>% 
+  summarise(
+    n = n(),
+    n_azul = sum(examen >= 4),
+    proporcion = n_azul/n
+  )
 
 # 8) Compute la probabilidad de que en un grupo de 30 personas,
 # 2 o más personas tengan el mismo cumpleaños 
 
+# Sol:
+# Adaptando el ejemplo de la Guia 2, tenemos
+
+# para un grupo al azar de n personas, la función
+# compute_prob calcula la probabilidad que nos piden
+
+mismo_cumple <- function(n){
+  cumples <- sample(1:365, n, replace=TRUE)
+  any(duplicated(cumples))
+}
+
+
+compute_prob <- function(n, B=10000){
+  results <- replicate(B, mismo_cumple(n))
+  mean(results)
+}
+
+compute_prob(n = 30)
+
+
 # 9) Encuentre el número más pequeño de personas en donde la
 # probabilidad de que dos o mas personas tengan el mismo cumpleaños
 # sea mayor o igual a 1/3
+
+
+# Sol:
+# Podemos probar con varios valores de n y encontrar 
+# el menor n donde la probabilidad es mayor o igual a 1/3
+
+personas <- 1:60
+
+prob <- sapply(personas, compute_prob)
+
+prob
+
+personas[prob >= 1/3]
+
+min(personas[prob >= 1/3])

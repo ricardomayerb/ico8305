@@ -49,7 +49,8 @@ mean(notas$examen >= 4)
 
 
 # Probabilidad
-# para un grupo al azar de n personas
+# para un grupo al azar de n personas, la función
+# compute_prob calcula la probabilidad que nos piden
 
 mismo_cumple <- function(n){
   cumples <- sample(1:365, n, replace=TRUE)
@@ -61,6 +62,11 @@ compute_prob <- function(n, B=10000){
   results <- replicate(B, mismo_cumple(n))
   mean(results)
 }
+
+
+# Sol:
+# Podemos partir probando con varios valores de n y encontrar 
+# el menor n donde la probabilidad sobrepasa a 1/3
 
 personas <- 1:60
 
