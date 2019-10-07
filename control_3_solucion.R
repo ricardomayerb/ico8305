@@ -156,3 +156,5 @@ prob
 personas[prob >= 1/3]
 
 min(personas[prob >= 1/3])
+
+
