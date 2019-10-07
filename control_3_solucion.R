@@ -3,7 +3,7 @@ library(ggplot2)
 library(dplyr)
 
 
-# 1) Use la funcion read_excel para importar la base de datos "nombres60.xlsx" 
+# 1) Use la función read_excel para importar la base de datos "nombres60.xlsx" 
 #    guarde el tibble resultante un objeto de nombre "notas"
 
 # Sol: (no olvidar las comillas y la extensión .xlsx del archivo)
@@ -82,10 +82,12 @@ summary(notas)
 
 # Sol:
 # Opcion 1: Indexado logico (base)  
-notas_exazul <- notas[notas$examen >= 4, ]
+notas_exazul <- notas[ notas$examen >= 4,  ]
+notas_exazul
 
 # Opcion 2: usando filter (filter)
-notas_exazul <- notas %>% filter(examen >= 4)
+notas_exazul <- notas %>%
+  filter(examen >= 4)
 
 notas_exazul
 
@@ -147,6 +149,7 @@ compute_prob(n = 30)
 personas <- 1:60
 
 prob <- sapply(personas, compute_prob)
+prob <- sapply(1:60, compute_prob)
 
 prob
 
