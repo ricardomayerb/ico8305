@@ -1,0 +1,68 @@
+---
+title: "Tarea 4"
+author: "Ricardo Mayer"
+date: "29/11/2019"
+output:
+  pdf_document: default
+  word_document: default
+  html_document:
+    number_sections: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Distribuciones discretas
+
+## Demostraciones algebraicas
+
+Demuestre las siguientes propiedades. Recomiendo que las escriba en forma manual y tome fotografías de las páginas con sus respuestas.
+
+Las demostraciones las puede encontrar en muchas partes, por lo que el requisito más importante es que *justifique línea por línea* los pasos que está aplicando para simplificar o avanzar.
+
+### Varianza  como diferencia de esperanzas
+
+Demuestre que la varianza de cualquier variable aleatoria discreta puede ser escrita como
+
+\[  V(X) = E(X^2)  - [E(x)]^2 \]
+
+### Esperanza de una distribución Binomial
+
+Demuestre que para una distribución Binomial, $E(X) = np$. Donde $n$ es la cantidad de pruebas en un experimento binomial y donde $p$ es la probabilidad de éxito en una prueba.
+
+
+### Esperanza y varianza de una Poisson
+
+Demuestre que para una distribución Poisson, $E(x) = \lambda$ y también $V(x) = \lambda$, donde $\lambda$ es el número de ocurrencias promedio en un intervalo
+
+
+## Ejercicios I
+
+Calcule la probabilidad relevante en los siguientes casos
+
+1.  Ud viene a la U de lunes a viernes. Para venir toma una sola micro a la misma hora todos los días. Cada mañana la probabilidad de poder sentarse en el algún momento del trayecto es 0.4. Entonces, cual es la probabilidad de que en una semana cualquiera se haya podido sentar un total de 4 veces? Use la función `dbinom` de `R` y luego vuelva a calcularla, pero esta vez use la fórmula combinatoria para la probabilidad binomial:
+
+\[  f(x) = \frac{n!}{x! (n-x)!} p^x  (1-p)^{n-x} \]
+
+2.  En un planteamiento como el anterior, cual es la probabilidad de que se haya podido sentar también 4 veces en total, pero en el transcurso de cuatro semanas? Al igual que en el ejercicio anterior calcule la respuesta usando `dbinom` y además usando directamente la fórmula combinatoria.
+
+
+3. Usted está a cargo de un servicio de escaneo de documentos, donde la gente llega de improviso a pedir el servicio. Durante su turno, piensa en ir a la cafetería a comprar un café para despertar, pero le preocupa que llegue mucha gente a pedir escaneo. Si va a la cafetería dejará el lugar desatendido por 15 minutos. En su experiencia, en un intervalo de una hora llegan en promedio 8 personas. Le parece aceptable ir a cafetería si en esos quince minutos llega *a lo más* una persona (es decir una o ninguna)  a pedir el servicio. Cuál es la probabilidad de este evento? Use la función `dpois` de `R` para encontrar esta probabiliad y luego vuelva a calcularla, pero esta vez use la fórmula de texto para la probabilidad de Poisson:
+
+\[  f(x) = \frac{\lambda^x \exp(-\lambda)}{x!}  \]
+
+
+4.  Repita la pregunta anterior, pero suponga ahora que la excursión a buscar café demora 10 minutos. 
+
+5.  Grafique la probabilidad de que llegue a lo más una persona para distintas duraciones de la excursión a comprar café: desde 5 hasta 25 minutos, en incrementos de 1 minuto.
+
+## Ejercicios II
+
+1.  Cree un ejercicio relacionado con la distribución Binomial que tenga que ver con el estallido social que comenzó en 18 de octubre.
+
+
+2.  Cree un ejercicio relacionado con la distribución de Poisson que tenga que ver con el estallido social que comenzó en 18 de octubre.
+
+
+3.  Cree un ejercicio relacionado con la distribución Hipergeométrica que tenga que ver con el estallido social que comenzó en 18 de octubre.

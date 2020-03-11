@@ -1,0 +1,55 @@
+# Prueba Solemne Estadística
+# Esteban_Céspedes_Estadistica_Leiva
+
+
+# No olvide ejecutar las líneas 6 y 11 antes de empezar el resto del trabajo
+library(readxl)
+
+# 1. Use la función read_excel para cargar los datos que se encuentran en el archivo excel 
+
+misdatos <- read_excel("datos_e.xlsx")
+
+
+
+# 2. Para las variables "pib_per_capita" y "esperanza_de_vida" compute lo siguiente
+# 2.1 la media cada una (4 pts)
+#Media Pib per capita
+#mean(misdatos$pib_per_capita)
+#[1] 11680.07
+
+#media esperanza de vida
+#mean(misdatos$esperanza_de_vida)
+#[1] 67.00742
+
+
+
+# 2.2 la desviación estandar de cada una (4 pts)
+#desviación estandar del pib per capita
+#sd(misdatos$pib_per_capita)
+#[1] 12859.94
+
+#desviación estandar de la esperanza de vida
+#sd(misdatos$esperanza_de_vida)
+#[1] 12.07302
+
+
+# 2.3 la cantidad de observaciones (n) de cada una (4 pts)
+#dim(misdatos)
+142   6
+
+
+
+# 3. Grafique los histogramas de estas tres variables:
+
+# "pib_per_capita" (2 pto)
+#hist(misdatos$pib_per_capita)
+
+# "esperanza_de_vida" (2 pto)
+# hist(misdatos$esperanza_de_vida)
+
+# logaritmo natural de la variable "población" (4 pts).
+hist(log(misdatos$poblacion))
+
+
+
+

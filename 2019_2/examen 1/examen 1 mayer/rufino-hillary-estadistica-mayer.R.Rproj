@@ -1,0 +1,12 @@
+set.seed(123)
+normal<-rnorm(1000)
+head(data.frame(normal))
+#media
+mean(normal)
+sd(normal)^2 
+var(normal)
+N(5, 9) 
+N(5,9)
+set.seed(123)
+hist(rnorm(1000), prob = TRUE, xlab = "x", 
+     main = "Histograma", xlim = c(-3, 3), ylim = c(0, 0.4))
